@@ -23,4 +23,11 @@ describe("WorkerValidatorTest 클래스 테스트", () => {
       expect(() => WorkerValidator.validateWorker(worker)).toThrow("[ERROR]");
     });
   });
+
+  test("비상 근무자는 평일 순번, 휴일 순번에 각각 1회 편성되어야 한다", () => {
+    const weekDayWorkers = ["루루", "수아", "슬링키", "글로", "참새"];
+    const holidayWorkers = ["수아", "글로", "참새", "루루", "슬링키"];
+
+    expect(() => WorkerValidator.validateWorkers(weekDayWorkers, holidayWorkers)).toThrow("[ERROR]");
+  });
 });
