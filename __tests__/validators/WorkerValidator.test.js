@@ -12,4 +12,15 @@ describe("WorkerValidatorTest 클래스 테스트", () => {
 
     expect(() => WorkerValidator.validateWorker(workers)).toThrow("[ERROR]");
   });
+
+  test("비상 근무자는 최소 5명 ~ 최대 35명 등록할 수 있습니다.", () => {
+    const workers = [
+      Array.from({ length: 3 }, (_, idx) => `참새${idx}`),
+      Array.from({ length: 40 }, (_, idx) => `참새${idx}`),
+    ];
+
+    workers.forEach((worker) => {
+      expect(() => WorkerValidator.validateWorker(worker)).toThrow("[ERROR]");
+    });
+  });
 });
