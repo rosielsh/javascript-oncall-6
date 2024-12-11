@@ -15,6 +15,9 @@ describe("Workers 클래스 테스트 작성", () => {
     const workers = new Workers(workersInput);
 
     expect(workers.assignWorker()).toEqual(workersInput[0]); // 루루 할당
+    expect(workers.assignWorker()).toEqual(workersInput[1]); // 솔로스타 할당
+
+    // 근데 솔로스타가 최근 근무한 사람이랑 겹침
     expect(workers.changeOrder(workersInput[1])).toEqual(workersInput[2]); // 자리를 바꿨으니 솔로스타가 아니라 수아를 배정
     expect(workers.assignWorker()).toEqual(workersInput[1]); // 다시 원래대로 솔로스타
   });
