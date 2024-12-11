@@ -9,12 +9,22 @@ class Workers {
     this.#previousChangedOrder = null; // 이전에 순서 바꿔준 사람
   }
 
-  getNextWorker() {
+  assignWorker() {
     if (this.#previousChangedOrder !== null) {
       const next = this.#previousChangedOrder;
       this.#previousChangedOrder = null;
       return next;
     }
+
+    const next = this.#workers[this.#idx++];
+
+    if (this.#idx === this.#workers.length) this.#idx = 0;
+
+    return next;
+  }
+
+  changeOrder(worker) {
+    this.#previousChangedOrder = worker;
 
     const next = this.#workers[this.#idx++];
 
