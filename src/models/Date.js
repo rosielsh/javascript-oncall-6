@@ -26,7 +26,7 @@ class Date {
   }
 
   getDayType(day) {
-    const type = this.#dayType[(day % 7) - 1];
+    const type = this.#dayType[(day - 1) % 7];
 
     // 주말
     if (!type) {
@@ -48,17 +48,19 @@ class Date {
     if (startDay === "월") {
       return [1, 1, 1, 1, 1, 0, 0]; // 월화수목금토일
     } else if (startDay === "화") {
-      return [0, 1, 1, 1, 1, 1, 0];
-    } else if (startDay === "수") {
-      return [0, 0, 1, 1, 1, 1, 1];
-    } else if (startDay === "목") {
-      return [1, 0, 0, 1, 1, 1, 1];
-    } else if (startDay === "금") {
-      return [1, 1, 0, 0, 1, 1, 1];
-    } else if (startDay === "토") {
-      return [1, 1, 1, 0, 0, 1, 1];
-    } else if (startDay === "일") {
       return [1, 1, 1, 1, 0, 0, 1];
+    } else if (startDay === "수") {
+      return [1, 1, 1, 0, 0, 1, 1];
+    } else if (startDay === "목") {
+      return [1, 1, 0, 0, 1, 1, 1];
+    } else if (startDay === "금") {
+      return [1, 0, 0, 1, 1, 1, 1];
+    } else if (startDay === "토") {
+      return [0, 0, 1, 1, 1, 1, 1];
+    } else if (startDay === "일") {
+      return [0, 1, 1, 1, 1, 1, 0];
     }
   }
 }
+
+export default Date;
