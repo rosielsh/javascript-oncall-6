@@ -13,59 +13,40 @@ class AssignManager {
     for (let day = 1; day <= totalDate; day++) {
       const dateType = this.#date.getDayType(day);
 
-      // 평일
       if (dateType === "WEEKDAY") {
-        const nextWorker = weekDayWorkers.assignWorker();
-
-        // 겹친다
-        if (
-          this.#assignedWorkers.length > 0 &&
-          nextWorker === this.#assignedWorkers[this.#assignedWorkers.length - 1].worker
-        ) {
-          const changedWorker = weekDayWorkers.changeOrder(nextWorker);
-
-          this.#assignedWorkers.push({
-            type: dateType,
-            worker: changedWorker,
-          });
-
-          continue;
-        }
-
-        // 겹치지 않음
-        this.#assignedWorkers.push({
-          type: dateType,
-          worker: nextWorker,
-        });
-
+        this.#processAssign(dateType, weekDayWorkers);
         continue;
       }
 
-      // 주말
-      const nextWorker = holidayWorkers.assignWorker();
-
-      if (
-        this.#assignedWorkers.length > 0 &&
-        nextWorker === this.#assignedWorkers[this.#assignedWorkers.length - 1].worker
-      ) {
-        const changedWorker = holidayWorkers.changeOrder(nextWorker);
-
-        this.#assignedWorkers.push({
-          type: dateType,
-          worker: changedWorker,
-        });
-
-        continue;
-      }
-
-      // 겹치지 않음
-      this.#assignedWorkers.push({
-        type: dateType,
-        worker: nextWorker,
-      });
+      this.#processAssign(dateType, holidayWorkers);
     }
 
     return this.#assignedWorkers;
+  }
+
+  #processAssign(dateType, worker) {
+    const nextWorker = worker.assignWorker();
+
+    if (this.#isDuplicatedWorker(nextWorker)) {
+      const changedWorker = worker.changeOrder(nextWorker);
+      this.#addWorker(dateType, changedWorker);
+      return;
+    }
+
+    this.#addWorker(dateType, nextWorker);
+  }
+
+  #addWorker(dateType, worker) {
+    this.#assignedWorkers.push({
+      type: dateType,
+      worker: worker,
+    });
+  }
+
+  #isDuplicatedWorker(nextWorker) {
+    return (
+      this.#assignedWorkers.length > 0 && nextWorker === this.#assignedWorkers[this.#assignedWorkers.length - 1].worker
+    );
   }
 }
 

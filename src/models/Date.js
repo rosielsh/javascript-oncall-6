@@ -29,12 +29,9 @@ class Date {
     const type = this.#dayType[(day - 1) % 7];
 
     // 주말
-    if (!type) {
-      return "WEEKEND";
-    }
+    if (!type) return "WEEKEND";
 
     // 평일
-    // 공휴일인지 확인
     const legalHolidays = Date.LEGAL_HOLIDAY[this.#month];
 
     if (legalHolidays && legalHolidays.includes(day)) {
